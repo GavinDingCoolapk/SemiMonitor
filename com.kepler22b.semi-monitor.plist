@@ -14,7 +14,7 @@
         <key>TURSO_URL</key>
         <string>libsql://semimonitor-gavindingcoolapk.aws-ap-northeast-1.turso.io</string>
         <key>TURSO_TOKEN</key>
-        <string>eyJhbGciOiJFZERTQSIsInR5pXCI6IkpXVCJ9.eyJhIjoicnciLCJpYXQiOjE3Nzk0MzY2MDEsImlkIjoiMDE5ZTRlYWYtNDkwMS03YmE3LWEzOTItOGY3ZWNkODVjY2JkIiwicmlkIjoiOGVmZDY3NTUtY2E0Mi00NGVhLTlkNDctNGFiYjg1ZDQyMjgxIn0.SdCSl4WMs9_qJN3aWAQGBPUbcxcRtuQwu6bEDGMH_vlKfDlgV8R814fzmqse_MA8PGxBUOg-P4XzXNuTDTPdAQ</string>
+        <string>eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9.eyJhIjoicnciLCJnaWQiOiIyOTA4NGFiNS0wNjY2LTQwNjktYmY3MS1kZDgyYjM1YjcyOWYiLCJpYXQiOjE3Nzk0NDQ2MTcsInJpZCI6IjdhMzY3NjliLTAwZDctNDRiNi1iYWNhLWU5NjJiOTg0OWYxNyJ9.Rl3fPbnm8014r26S9Y-lda01duMlgNx3-FdzXKpyJ2OrVWHRylq4ZHSLNUWHVWcjLQ-NiNCgqV1rdxvkgBPtCA</string>
         <key>X_AUTH_TOKEN</key>
         <string>b213583d8431de9b50dcfab5d0142efc7880a344</string>
         <key>X_PROXY</key>

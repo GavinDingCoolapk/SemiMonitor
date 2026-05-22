@@ -8,3 +8,4 @@ scweet_state.db-shm
 scweet_state.db-wal
 __pycache__/
 .DS_Store
+com.kepler22b.semi-monitor.plist

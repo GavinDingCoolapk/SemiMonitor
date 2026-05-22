@@ -12,5 +12,17 @@
     "@libsql/client": "^0.14.0",
     "feedparser": "^2.2.10",
     "request": "^2.88.2"
-  }
+  },
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GavinDingCoolapk/SemiMonitor.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GavinDingCoolapk/SemiMonitor/issues"
+  },
+  "homepage": "https://github.com/GavinDingCoolapk/SemiMonitor#readme"
 }

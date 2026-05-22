@@ -23,6 +23,8 @@ ACCOUNTS = [
     "Zai_org",
     "xiaomustock",
     "qinbafrank",
+    "ACM_SIGCOMM",
+    "sigcomm",
 ]
 
 AUTH_TOKEN = os.environ.get("X_AUTH_TOKEN", "")

@@ -61,6 +61,10 @@ function runCollector(name) {
       cmd = `python3 "${path.join(ROOT, 'src/collectors/prices.py')}"`;
       env = baseEnv;
       break;
+    case 'acm_conf':
+      cmd = `python3 "${path.join(ROOT, 'src/collectors/acm_conferences.py')}"`;
+      env = baseEnv;
+      break;
   }
 
   try {
@@ -128,15 +132,24 @@ function processResults(name, data) {
     case 'prices':
       if (data.prices) pushToTurso('prices', data.prices);
       break;
+    case 'acm_conf':
+      if (data.papers) {
+        pushToTurso('news', data.papers.map(p => ({
+          title: p.title, source: p.source, url: p.url,
+          published_at: p.published_at, category: 'acm_conference',
+          analysis_brief: p.text_full || '',
+        })));
+      }
+      break;
   }
 }
 
 // Main loop
 log('SemiMonitor collector daemon started');
-log(`Schedule: RSS/Twitter every 1h, arXiv/prices every 24h`);
+log(`Schedule: RSS/Twitter every 1h, arXiv/prices/ACM every 24h`);
 
 // Run all immediately on start
-for (const name of ['rss', 'twitter', 'arxiv', 'prices']) {
+for (const name of ['rss', 'twitter', 'arxiv', 'prices', 'acm_conf']) {
   log(`Running ${name} (initial)...`);
   const data = runCollector(name);
   if (data) processResults(name, data);
