@@ -471,363 +471,11 @@
 </div>
 
 <script>
-// ─── Demo Data ─────────────────────────────────
-const DEMO_NEWS = [
-  {
-    title: "NVIDIA Rubin Ultra tape-out reportedly ahead of schedule, mass production expected H1 2027",
-    source: "Tom's Hardware",
-    source_url: "https://www.tomshardware.com/tech-industry/",
-    published_at: "2026-05-22T07:30:00Z",
-    component_type: ["gpu", "foundry"],
-    event_type: "tech_breakthrough",
-    impact: "bullish",
-    analysis: "Rubin Ultra 提前流片意味着 NVIDIA GPU 代际迭代加速，将拉动 TSMC CoWoS 产能需求，HBM4 采购节奏也可能前移。",
-    chain: [
-      { icon: "⚡", label: "NVIDIA", detail: "产品竞争力↑" },
-      { icon: "🏭", label: "TSMC", detail: "CoWoS需求↑" },
-      { icon: "📦", label: "SK海力士", detail: "HBM4出货↑" },
-      { icon: "💰", label: "NVDA营收", detail: "预期上修" },
-      { icon: "📈", label: "NVDA股价", detail: "看涨" }
-    ]
-  },
-  {
-    title: "SK Hynix announces $8B investment in US HBM fab, targeting 2028 production start",
-    source: "Reuters",
-    source_url: "https://www.reuters.com/technology/",
-    published_at: "2026-05-22T06:15:00Z",
-    component_type: ["hbm", "foundry"],
-    event_type: "capacity_expand",
-    impact: "bullish",
-    analysis: "SK海力士美国建厂扩大全球 HBM 产能，中长期缓解供给瓶颈。短期 ASP 有温和下行压力，但巩固了地缘政治优势。",
-    chain: [
-      { icon: "🏗️", label: "HBM产能", detail: "供给↑" },
-      { icon: "📊", label: "HBM ASP", detail: "短期温和↓" },
-      { icon: "🏢", label: "SK海力士", detail: "份额稳固" },
-      { icon: "💰", label: "三星/美光", detail: "竞争加剧" },
-      { icon: "📈", label: "SK海力士", detail: "长期看涨" }
-    ]
-  },
-  {
-    title: "Microsoft Azure capex hits $22B in Q3, AI infrastructure spend up 45% YoY",
-    source: "The Register",
-    source_url: "https://www.theregister.com/",
-    published_at: "2026-05-22T04:20:00Z",
-    component_type: ["capex", "gpu"],
-    event_type: "earnings",
-    impact: "bullish",
-    analysis: "微软 capex 大幅增长验证 AI 基础设施需求持续强劲，直接利好 GPU/网络芯片/光模块需求链。",
-    chain: [
-      { icon: "☁️", label: "云厂商Capex", detail: "需求强劲↑" },
-      { icon: "🔌", label: "GPU需求", detail: "出货量↑" },
-      { icon: "🔗", label: "光模块", detail: "800G→1.6T" },
-      { icon: "💰", label: "NVIDIA营收", detail: "超预期" },
-      { icon: "📈", label: "NVDA股价", detail: "看涨" }
-    ]
-  },
-  {
-    title: "TSMC 2nm yield reportedly reaches 80%, ahead of internal targets",
-    source: "Digitimes",
-    source_url: "https://www.digitimes.com/",
-    published_at: "2026-05-22T02:00:00Z",
-    component_type: ["foundry"],
-    event_type: "supply_chain",
-    impact: "bullish",
-    analysis: "2nm 良率超预期意味着 2027 年量产节点更确定，TSMC 毛利率将因先进制程溢价而提升。",
-    chain: [
-      { icon: "🔬", label: "2nm良率", detail: "80%↑" },
-      { icon: "🏭", label: "TSMC", detail: "量产确定" },
-      { icon: "📦", label: "先进制程", detail: "ASP溢价↑" },
-      { icon: "💰", label: "TSMC毛利率", detail: "58-60%" },
-      { icon: "📈", label: "TSM股价", detail: "看涨" }
-    ]
-  },
-  {
-    title: "Broadcom Tomahawk 5 sampling delayed to Q4 2026 due to design complexity",
-    source: "EE Times",
-    source_url: "https://www.eetimes.com/",
-    published_at: "2026-05-21T20:00:00Z",
-    component_type: ["network"],
-    event_type: "supply_chain",
-    impact: "bearish",
-    analysis: "Tomahawk 5 延迟采样可能影响 800G 以太网交换机升级节奏，短期利好现有 Tomahawk 4 库存消化。",
-    chain: [
-      { icon: "⏳", label: "TH5延迟", detail: "Q4采样" },
-      { icon: "🔗", label: "交换机升级", detail: "节奏放缓↓" },
-      { icon: "📦", label: "AVGO出货", detail: "短期承压↓" },
-      { icon: "💰", label: "AVGO营收", detail: "低于预期" },
-      { icon: "📉", label: "AVGO股价", detail: "短期看跌" }
-    ]
-  },
-  {
-    title: "Coherent reports 1.6T transceiver volume shipments begin in Q2",
-    source: "SemiEngineering",
-    source_url: "https://semiengineering.com/",
-    published_at: "2026-05-21T16:30:00Z",
-    component_type: ["optical"],
-    event_type: "shipment_change",
-    impact: "bullish",
-    analysis: "1.6T 光模块开始量产出货标志着下一代数据中心互连升级启动，ASP 较 800G 提升约 30-40%。",
-    chain: [
-      { icon: "📦", label: "1.6T量产", detail: "首批出货" },
-      { icon: "💰", label: "光模块ASP", detail: "↑30-40%" },
-      { icon: "🏢", label: "Coherent", detail: "先发溢价" },
-      { icon: "💵", label: "COHR营收", detail: "加速增长" },
-      { icon: "📈", label: "COHR股价", detail: "看涨" }
-    ]
-  },
-  {
-    title: "Samsung warns of DRAM oversupply risk in H2 2026 on weak consumer demand",
-    source: "Nikkei Asia",
-    source_url: "https://asia.nikkei.com/",
-    published_at: "2026-05-21T14:00:00Z",
-    component_type: ["hbm", "ssd"],
-    event_type: "price_change",
-    impact: "bearish",
-    analysis: "三星预警传统 DRAM 供过于求，DDR4 价格可能继续承压。但 HBM 供需仍然紧张，结构性分化加剧。",
-    chain: [
-      { icon: "📊", label: "DRAM供需", detail: "供过于求" },
-      { icon: "📉", label: "DDR4价格", detail: "下行↓" },
-      { icon: "🏢", label: "三星", detail: "库存压力" },
-      { icon: "💰", label: "三星毛利率", detail: "承压↓" },
-      { icon: "📉", label: "三星股价", detail: "看跌" }
-    ]
-  },
-  {
-    title: "Meta plans 350k H100-equivalent GPU training cluster for Llama 4",
-    source: "ServeTheHome",
-    source_url: "https://www.servethehome.com/",
-    published_at: "2026-05-21T10:00:00Z",
-    component_type: ["gpu", "capex", "network", "optical"],
-    event_type: "customer_order",
-    impact: "bullish",
-    analysis: "Meta 大规模 GPU 采购直接利好 NVIDIA、Broadcom/Marvell、光模块厂商。35 万卡集群的 NVLink/网络互连需求巨大。",
-    chain: [
-      { icon: "🤖", label: "Meta AI", detail: "35万卡集群" },
-      { icon: "🔌", label: "GPU需求", detail: "大幅↑" },
-      { icon: "🔗", label: "光模块", detail: "800G放量" },
-      { icon: "💰", label: "NVIDIA营收", detail: "环比增长" },
-      { icon: "📈", label: "NVDA股价", detail: "看涨" }
-    ]
-  },
-  {
-    title: "Intel foundry reports continued losses, client talks with AWS reportedly stall",
-    source: "The Register",
-    source_url: "https://www.theregister.com/",
-    published_at: "2026-05-21T08:00:00Z",
-    component_type: ["foundry", "cpu"],
-    event_type: "earnings",
-    impact: "bearish",
-    analysis: "Intel 代工业务持续亏损且大客户谈判遇阻，CPU 市场份额可能继续被 AMD EPYC 侵蚀。",
-    chain: [
-      { icon: "🏭", label: "Intel代工", detail: "持续亏损" },
-      { icon: "📉", label: "产能利用率", detail: "低迷↓" },
-      { icon: "🖥️", label: "CPU份额", detail: "被AMD侵蚀↓" },
-      { icon: "💰", label: "INTC营收", detail: "下滑↓" },
-      { icon: "📉", label: "INTC股价", detail: "看跌" }
-    ]
-  },
-  {
-    title: "Alibaba admits it's struggling to keep up with rival chipmakers and AI shops",
-    source: "The Register",
-    source_url: "https://www.theregister.com/",
-    published_at: "2026-05-22T02:39:40Z",
-    component_type: ["gpu", "ml_model"],
-    event_type: "analyst_opinion",
-    impact: "neutral",
-    analysis: "阿里承认芯片和 AI 竞争力不足，反映中国自研 AI 芯片仍无法替代 NVIDIA。全球 AI 芯片需求仍集中在 NVIDIA。",
-    chain: [
-      { icon: "🇨🇳", label: "中国自研", detail: "仍不成熟" },
-      { icon: "🔌", label: "NVIDIA", detail: "垄断地位稳固" },
-      { icon: "📊", label: "中国市场", detail: "影响有限" },
-      { icon: "💰", label: "NVDA", detail: "无实质影响" },
-      { icon: "➡️", label: "NVDA股价", detail: "中性" }
-    ]
-  }
-];
-
-const DEMO_COMPANIES = {
-  "AI 芯片（GPU）": [
-    {
-      name: "NVIDIA", ticker: "NVDA", components: ["GPU", "NVLink", "NIC", "DPU"],
-      shipment: "up", asp: "up", cost: "flat", revenue: "up", margin: "up",
-      stock: "bullish",
-      reasoning: "GPU 需求持续强劲（Meta/Microsoft capex 超预期），Rubin Ultra 提前流片巩固竞争力。供需偏紧，ASP 稳中有升。关注 CoWoS 产能是否成为出货瓶颈。"
-    }
-  ],
-  "CPU / SoC": [
-    {
-      name: "Intel", ticker: "INTC", components: ["CPU (Xeon)", "Foundry"],
-      shipment: "down", asp: "down", cost: "up", revenue: "down", margin: "down",
-      stock: "bearish",
-      reasoning: "代工业务持续亏损，CPU 市场份额被 AMD 侵蚀。AWS 代工谈判停滞。产能利用率低拖累毛利率。需要看到代工客户突破才有转机。"
-    },
-    {
-      name: "AMD", ticker: "AMD", components: ["GPU (MI系列)", "CPU (EPYC)"],
-      shipment: "up", asp: "flat", cost: "flat", revenue: "up", margin: "flat",
-      stock: "neutral",
-      reasoning: "MI350 出货量随客户多元化而增长，但 ASP 受 NVIDIA 竞争压力。EPYC 在数据中心 CPU 市场份额持续提升。AI GPU 是关键增长驱动。"
-    },
-    {
-      name: "ARM", ticker: "ARM", components: ["CPU IP", "架构授权"],
-      shipment: "up", asp: "up", cost: "flat", revenue: "up", margin: "up",
-      stock: "bullish",
-      reasoning: "ARM 架构在数据中心渗透率持续提升（NVIDIA Grace、AWS Graviton），授权收入和版税收入双增。V9 架构升级推动 ASP 提升。"
-    },
-    {
-      name: "Qualcomm", ticker: "QCOM", components: ["移动 SoC", "汽车芯片", "AI PC"],
-      shipment: "flat", asp: "up", cost: "flat", revenue: "up", margin: "flat",
-      stock: "neutral",
-      reasoning: "手机芯片市场稳定，汽车芯片是增长点。AI PC（Snapdragon X 系列）渗透初期。整体温和增长。"
-    }
-  ],
-  "ASIC / 定制芯片": [
-    {
-      name: "Broadcom", ticker: "AVGO", components: ["Switch ASIC", "NIC", "PCIe", "定制芯片"],
-      shipment: "flat", asp: "flat", cost: "flat", revenue: "flat", margin: "flat",
-      stock: "neutral",
-      reasoning: "Tomahawk 5 延迟采样影响短期网络芯片出货节奏，但现有 Tomahawk 4 需求稳健。AI 以太网渗透（Spectrum-X）是中期利好。Google/Meta 定制 ASIC 订单是增长驱动。"
-    },
-    {
-      name: "Marvell", ticker: "MRVL", components: ["DPU", "Switch ASIC", "定制芯片"],
-      shipment: "up", asp: "up", cost: "flat", revenue: "up", margin: "up",
-      stock: "bullish",
-      reasoning: "AWS/Google 定制芯片订单增长，DPU/Switch ASIC 出货量提升。数据中心互连定制化趋势利好。PAM4 DSP 渗透加速。"
-    }
-  ],
-  "存储（DRAM / NAND / HBM）": [
-    {
-      name: "SK Hynix", ticker: "000660.KS", components: ["HBM", "DRAM", "NAND"],
-      shipment: "up", asp: "up", cost: "down", revenue: "up", margin: "up",
-      stock: "bullish",
-      reasoning: "HBM3E 产能满载，HBM4 研发进度领先。美国建厂巩固地缘优势。HBM ASP 持续上行，传统 DRAM 供过于求对冲有限。"
-    },
-    {
-      name: "Samsung", ticker: "005930.KS", components: ["HBM", "DRAM", "NAND", "Foundry"],
-      shipment: "flat", asp: "down", cost: "flat", revenue: "flat", margin: "down",
-      stock: "bearish",
-      reasoning: "传统 DRAM/NAND 供过于求压低 ASP，HBM 市场份额落后 SK海力士。代工业务竞争力不足。HBM4 是关键翻身节点，短期催化剂有限。"
-    },
-    {
-      name: "Micron", ticker: "MU", components: ["HBM", "DRAM", "NAND", "SOCAMM"],
-      shipment: "up", asp: "flat", cost: "down", revenue: "up", margin: "up",
-      stock: "neutral",
-      reasoning: "HBM 出货量随产能爬坡而增长，但 ASP 受三星竞争影响涨幅有限。SOCAMM 领先优势是新增长点。传统 DRAM 价格下行部分对冲。"
-    },
-    {
-      name: "SanDisk", ticker: "SNDK", components: ["SSD", "NAND Flash"],
-      shipment: "flat", asp: "flat", cost: "flat", revenue: "flat", margin: "flat",
-      stock: "neutral",
-      reasoning: "企业级 SSD 需求随 AI 服务器增长温和回升，但 NAND 供过于求压制 ASP。关注 AI 服务器 SSD 配置量提升带来的结构性机会。"
-    },
-    {
-      name: "Western Digital", ticker: "WDC", components: ["HDD", "SSD", "NAND"],
-      shipment: "flat", asp: "down", cost: "flat", revenue: "flat", margin: "down",
-      stock: "bearish",
-      reasoning: "HDD 受 AI 冷存储需求支撑但 NAND 供过于求。SSD 业务竞争激烈。分拆 NAND 业务是潜在催化，但执行风险存在。"
-    },
-    {
-      name: "Nanya Technology", ticker: "2408.TW", components: ["DRAM"],
-      shipment: "flat", asp: "down", cost: "flat", revenue: "down", margin: "down",
-      stock: "bearish",
-      reasoning: "传统 DRAM 供过于求，价格下行压力持续。以标准型 DRAM 为主，缺乏 HBM 等高端产品溢价。毛利率持续承压。"
-    }
-  ],
-  "代工 & 封装": [
-    {
-      name: "TSMC", ticker: "TSM", components: ["Foundry", "CoWoS", "InFo"],
-      shipment: "up", asp: "up", cost: "flat", revenue: "up", margin: "up",
-      stock: "bullish",
-      reasoning: "2nm 良率超预期，先进制程产能利用率 95%+。AI 需求拉动 CoWoS 扩产，ASP 因先进制程占比提升而上行。毛利率有望维持 58-60%。"
-    },
-    {
-      name: "UMC", ticker: "2303.TW", components: ["Foundry (成熟制程)"],
-      shipment: "flat", asp: "flat", cost: "flat", revenue: "flat", margin: "flat",
-      stock: "neutral",
-      reasoning: "成熟制程需求稳定但缺乏成长弹性。28nm 产能利用率回升，但价格竞争激烈。AI 相关需求对成熟制程拉动有限。"
-    }
-  ],
-  "EDA / IP": [
-    {
-      name: "Synopsys", ticker: "SNPS", components: ["EDA 工具", "IP 授权"],
-      shipment: "up", asp: "up", cost: "flat", revenue: "up", margin: "up",
-      stock: "bullish",
-      reasoning: "先进制程设计复杂度提升推动 EDA 工具需求，3nm/2nm 设计项目增加。IP 授权收入随 chiplet 架构普及而增长。SaaS 转型提升 recurring revenue。"
-    },
-    {
-      name: "Cadence", ticker: "CDNS", components: ["EDA 工具", "IP 授权"],
-      shipment: "up", asp: "up", cost: "flat", revenue: "up", margin: "up",
-      stock: "bullish",
-      reasoning: "与 Synopsys 类似受益于先进制程设计需求增长。计算软件和系统设计分析是差异化优势。AI 芯片设计项目增加是直接利好。"
-    }
-  ],
-  "光芯片 & 光模块": [
-    {
-      name: "Coherent", ticker: "COHR", components: ["光模块", "激光器芯片"],
-      shipment: "up", asp: "up", cost: "flat", revenue: "up", margin: "up",
-      stock: "bullish",
-      reasoning: "1.6T 光模块开始量产，ASP 提升 30-40%。作为首批供应商享受先发溢价。激光器芯片自供优势明显。800G→1.6T 升级周期是核心增长驱动。"
-    },
-    {
-      name: "Lumentum", ticker: "LITE", components: ["激光器", "光器件"],
-      shipment: "up", asp: "up", cost: "flat", revenue: "up", margin: "up",
-      stock: "bullish",
-      reasoning: "800G/1.6T 激光器需求强劲，通信激光器是核心业务。电信市场回暖 + 数据中心升级双轮驱动。VCSEL 在 3D 传感领域有新增长点。"
-    },
-    {
-      name: "Cisco", ticker: "CSCO", components: ["光模块", "网络交换机"],
-      shipment: "up", asp: "flat", cost: "flat", revenue: "up", margin: "flat",
-      stock: "neutral",
-      reasoning: "Silicon One 自研芯片渗透率提升，网络交换机业务稳健。Acacia 收购后光模块能力增强。AI 以太网是中期增长机会。"
-    }
-  ],
-  "设备": [
-    {
-      name: "ASML", ticker: "ASML", components: ["光刻机 (EUV/DUV)", "计量设备"],
-      shipment: "up", asp: "up", cost: "flat", revenue: "up", margin: "up",
-      stock: "bullish",
-      reasoning: "EUV 出货量持续增长（2026 年 70+ 台），High-NA EUV 开始出货。TSMC/Samsung/Intel 先进制程扩张是核心驱动。订单积压充足。"
-    }
-  ],
-  "模拟 / 接口 / 特种芯片": [
-    {
-      name: "Texas Instruments", ticker: "TXN", components: ["模拟芯片", "电源管理"],
-      shipment: "flat", asp: "down", cost: "flat", revenue: "down", margin: "down",
-      stock: "bearish",
-      reasoning: "工业和汽车需求疲软导致库存调整周期延长。模拟芯片价格承压。长期受益于电气化趋势，但短期缺乏催化。"
-    }
-  ],
-  "衬底材料": [
-    {
-      name: "Sumco", ticker: "3436.T", components: ["硅晶圆"],
-      shipment: "flat", asp: "down", cost: "flat", revenue: "flat", margin: "down",
-      stock: "bearish",
-      reasoning: "半导体硅晶圆需求疲软，ASP 下行压力持续。12 英寸晶圆产能过剩。AI 先进制程对高端晶圆需求有支撑，但不足以扭转整体格局。"
-    }
-  ],
-  "AI 模型公司": [
-    {
-      name: "MiniMax", ticker: "Private", components: ["大语言模型", "AI 应用"],
-      shipment: "up", asp: "up", cost: "up", revenue: "up", margin: "flat",
-      stock: "neutral",
-      reasoning: "国内头部 AI 模型公司之一，海螺 AI 用户增长强劲。但模型公司普遍面临算力成本高企、商业化变现压力。关注海外扩张和 API 收入增长。"
-    },
-    {
-      name: "Zhipu AI (智谱)", ticker: "Private", components: ["大语言模型", "AI Agent"],
-      shipment: "up", asp: "up", cost: "up", revenue: "up", margin: "flat",
-      stock: "neutral",
-      reasoning: "GLM 系列模型在国内企业级市场有较强渗透。ChatGLM 开源生态+智谱清言 C 端产品双线推进。关注融资进展和商业化拐点。"
-    }
-  ],
-  "光通信 / 硅光": [
-    {
-      name: "HyperLight", ticker: "Private", components: ["TF LN 调制器"],
-      shipment: "up", asp: "flat", cost: "flat", revenue: "up", margin: "flat",
-      stock: "neutral",
-      reasoning: "薄膜铌酸锂（TFLN）调制器在 800G/1.6T 数据中心互连中渗透率提升。技术路线明确但公司未上市，关注潜在 IPO 机会。"
-    }
-  ]
-};
-
+// ─── State ─────────────────────────────────
+let NEWS_DATA = [];
+let COMPANIES_DATA = {};
+let LOADED = false;
+let LOADING = false;
 
 // ─── Helpers ───
 const TAG_CLASS = {
@@ -855,12 +503,55 @@ document.querySelectorAll(".tab").forEach(tab => {
   });
 });
 
+// ─── Fetch Data ───
+async function fetchData() {
+  if (LOADING) return;
+  LOADING = true;
+  try {
+    const resp = await fetch('/api/data');
+    if (!resp.ok) throw new Error('API error: ' + resp.status);
+    const data = await resp.json();
+    // Map Turso rows to frontend format
+    NEWS_DATA = (data.news || []).map(row => ({
+      title: row.title,
+      source: row.source,
+      source_url: row.url,
+      published_at: row.published_at,
+      component_type: row.component_impact ? row.component_impact.split(',').map(s => s.trim()).filter(Boolean) : [],
+      impact: row.stock_signal || 'neutral',
+      analysis: row.analysis_brief || '',
+      chain: row.supply_demand_impact ? row.supply_demand_impact.split('→').map(s => s.trim()).filter(Boolean).map(s => {
+        const parts = s.split(':');
+        return { icon: '📌', label: parts[0] || s, detail: parts[1] || '' };
+      }) : []
+    }));
+    // Group companies by category
+    COMPANIES_DATA = {};
+    (data.companies || []).forEach(row => {
+      const cat = row.category || '其他';
+      if (!COMPANIES_DATA[cat]) COMPANIES_DATA[cat] = [];
+      COMPANIES_DATA[cat].push({
+        name: row.company_name,
+        ticker: row.ticker || '',
+        components: row.sub_category ? row.sub_category.split(',').map(s => s.trim()).filter(Boolean) : [],
+        stock: row.stock_signal || 'neutral',
+        reasoning: row.analysis_summary || ''
+      });
+    });
+    LOADED = true;
+    document.getElementById('last-update').textContent = '最近更新：' + new Date().toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai' });
+  } catch (err) {
+    console.error('Failed to fetch data:', err);
+  }
+  LOADING = false;
+}
+
 // ─── Filters ───
 let activeFilter = "all";
 
 function renderFilters() {
   const bar = document.getElementById("filter-bar");
-  const types = ["all", ...new Set(DEMO_NEWS.flatMap(n => n.component_type || []))];
+  const types = ["all", ...new Set(NEWS_DATA.flatMap(n => n.component_type || []))];
   bar.innerHTML = `<span class="filter-label">筛选</span>` +
     types.map(t => `<button class="filter-btn ${t === activeFilter ? 'active' : ''}" data-filter="${t}">${t === 'all' ? '全部' : TAG_LABEL[t] || t}</button>`).join("");
   bar.querySelectorAll(".filter-btn").forEach(btn => {
@@ -872,8 +563,14 @@ function renderFilters() {
 function renderNews() {
   const feed = document.getElementById("news-feed");
   const filtered = activeFilter === "all"
-    ? DEMO_NEWS
-    : DEMO_NEWS.filter(n => (n.component_type || []).includes(activeFilter));
+    ? NEWS_DATA
+    : NEWS_DATA.filter(n => (n.component_type || []).includes(activeFilter));
+
+  if (filtered.length === 0) {
+    feed.innerHTML = '<div style="text-align:center;color:var(--text-3);padding:40px;">' +
+      (LOADED ? '暂无新闻数据。等待采集系统填充数据...' : '正在加载数据...') + '</div>';
+    return;
+  }
 
   feed.innerHTML = filtered.map(n => {
     const tags = (n.component_type || []).map(t =>
@@ -890,7 +587,7 @@ function renderNews() {
       : "";
 
     const chainDir = n.impact === "bearish" ? "chain-down" : n.impact === "bullish" ? "chain-up" : "chain-flat";
-    const chainHTML = n.chain ? `
+    const chainHTML = n.chain && n.chain.length > 0 ? `
       <div class="chain ${chainDir}">
         ${n.chain.map((s, i) => `
           <div class="chain-step">
@@ -905,7 +602,7 @@ function renderNews() {
 
     return `<div class="news-item">
       <div class="news-header">
-        <a class="news-title" href="${n.source_url}" target="_blank" rel="noopener">${n.title}</a>
+        <a class="news-title" href="${n.source_url || '#'}" target="_blank" rel="noopener">${n.title}</a>
         <div class="news-time">${time}</div>
       </div>
       <div class="news-meta">
@@ -926,7 +623,13 @@ function renderNews() {
 // ─── Companies ───
 function renderCompanies() {
   const list = document.getElementById("company-list");
-  list.innerHTML = Object.entries(DEMO_COMPANIES).map(([category, companies]) => `
+  const entries = Object.entries(COMPANIES_DATA);
+  if (entries.length === 0) {
+    list.innerHTML = '<div style="text-align:center;color:var(--text-3);padding:40px;">' +
+      (LOADED ? '暂无公司数据。等待采集系统填充数据...' : '正在加载数据...') + '</div>';
+    return;
+  }
+  list.innerHTML = entries.map(([category, companies]) => `
     <div class="category-section">
       <div class="category-title">${category}</div>
       <div class="company-grid">
@@ -935,13 +638,6 @@ function renderCompanies() {
             : c.stock === "bearish" ? "stock-bearish" : "stock-neutral";
           const stockLabel = c.stock === "bullish" ? "看涨"
             : c.stock === "bearish" ? "看跌" : "中性";
-          const metrics = [
-            { label: "出货量", value: c.shipment },
-            { label: "ASP", value: c.asp },
-            { label: "成本", value: c.cost },
-            { label: "营收", value: c.revenue },
-            { label: "毛利率", value: c.margin },
-          ];
           return `<div class="company-card">
             <div class="company-header">
               <div class="company-name">
@@ -953,12 +649,6 @@ function renderCompanies() {
             <div class="company-components">
               ${c.components.map(comp => `<span class="tag tag-generic">${comp}</span>`).join("")}
             </div>
-            <div class="company-metrics">
-              ${metrics.map(m => `<div class="metric">
-                <span class="metric-label">${m.label}</span>
-                <span class="metric-value ${ARROW_CLASS[m.value]}">${ARROW[m.value]}</span>
-              </div>`).join("")}
-            </div>
             <div class="company-reasoning">${c.reasoning}</div>
           </div>`;
         }).join("")}
@@ -967,10 +657,14 @@ function renderCompanies() {
   `).join("");
 }
 
-// Init
-renderFilters();
-renderNews();
-renderCompanies();
+// ─── Init ───
+async function init() {
+  await fetchData();
+  renderFilters();
+  renderNews();
+  renderCompanies();
+}
+init();
 </script>
 
 </body>
