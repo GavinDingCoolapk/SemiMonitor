@@ -9,11 +9,13 @@
  *   node src/pipeline.js [--collectors rss,twitter,arxiv,prices] [--dry-run]
  */
 
-const { execSync, exec } = require('child_process');
-const fs = require('fs');
-const path = require('path');
+import { execSync } from 'child_process';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-// ─── Config ───
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 const ROOT = path.resolve(__dirname, '..');
 const TURSO_URL = process.env.TURSO_URL || 'libsql://semimonitor-gavindingcoolapk.aws-ap-northeast-1.turso.io';
 const TURSO_TOKEN = process.env.TURSO_TOKEN || '';
@@ -22,7 +24,7 @@ const COLLECTORS = {
   rss: { cmd: 'node', script: 'src/collectors/rss.js', output: 'rss' },
   twitter: { cmd: 'python3', script: 'src/collectors/twitter.py', output: 'tweets' },
   arxiv: { cmd: 'python3', script: 'src/collectors/arxiv.py', output: 'papers' },
-  prices: { cmd: 'node', script: 'src/collectors/prices.js', output: 'prices' },
+  prices: { cmd: 'python3', script: 'src/collectors/prices.py', output: 'prices' },
 };
 
 // ─── Helpers ───
@@ -55,7 +57,9 @@ function runCollector(name, dryRun) {
       { cwd: ROOT, env, timeout: 120000, encoding: 'utf-8', stdio: ['pipe', 'pipe', 'pipe'] }
     );
     const data = JSON.parse(result);
-    log(`  ✓ ${name}: ${data[collector.output || 'count'] || data.count || '?'} items`);
+    const key = collector.output || 'count';
+    const count = Array.isArray(data[key]) ? data[key].length : (data.count || '?');
+    log(`  ✓ ${name}: ${count} items`);
     return data;
   } catch (err) {
     log(`  ✗ ${name}: ${err.message?.substring(0, 100)}`);
@@ -86,7 +90,7 @@ function pushToTurso(type, items) {
     log(`  ✗ Push ${type} failed: ${err.message?.substring(0, 100)}`);
   }
 
-  fs.unlinkSync(tmpFile).catch(() => {});
+  try { fs.unlinkSync(tmpFile); } catch (_) {}
 }
 
 // ─── Main ───
@@ -159,7 +163,8 @@ async function main() {
     })));
   }
   if (results.prices) {
-    pushToTurso('prices', results.prices.prices || []);
+    const prices = results.prices.prices || results.prices || [];
+    if (prices.length > 0) pushToTurso('prices', prices);
   }
 
   log('Pipeline complete');
