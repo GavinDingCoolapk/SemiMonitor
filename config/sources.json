@@ -1,0 +1,31 @@
+{
+  "turso": {
+    "url": "libsql://semimonitor-gavindingcoolapk.aws-ap-northeast-1.turso.io",
+    "authToken": "eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9.eyJhIjoicnciLCJpYXQiOjE3Nzk0MzY2MDEsImlkIjoiMDE5ZTRlYWYtNDkwMS03YmE3LWEzOTItOGY3ZWNkODVjY2JkIiwicmlkIjoiOGVmZDY3NTUtY2E0Mi00NGVhLTlkNDctNGFiYjg1ZDQyMjgxIn0.SdCSl4WMs9_qJN3aWAQGBPUbcxcRtuQwu6bEDGMH_vlKfDlgV8R814fzmqse_MA8PGxBUOg-P4XzXNuTDTPdAQ"
+  },
+  "rss_sources": [
+    { "name": "Reuters Technology", "url": "https://feeds.reuters.com/reuters/technologyNews", "lang": "en" },
+    { "name": "The Register", "url": "https://www.theregister.com/headlines.atom", "lang": "en" },
+    { "name": "Tom's Hardware", "url": "https://www.tomshardware.com/feeds/all", "lang": "en" },
+    { "name": "AnandTech", "url": "https://www.anandtech.com/rss/", "lang": "en" },
+    { "name": "EE Times", "url": "https://www.eetimes.com/feed", "lang": "en" },
+    { "name": "Nikkei Asia Tech", "url": "https://asia.nikkei.com/feed", "lang": "en" },
+    { "name": "SemiEngineering", "url": "https://semiengineering.com/feed/", "lang": "en" },
+    { "name": "Digitimes", "url": "https://www.digitimes.com/rss/dram.xml", "lang": "en" },
+    { "name": "ServeTheHome", "url": "https://www.servethehome.com/feed/", "lang": "en" }
+  ],
+  "keywords": {
+    "gpu": ["GPU", "graphics processing unit", "NVIDIA", "AMD", "accelerator", "AI chip", "H100", "B200", "Blackwell", "Rubin", "MI300", "MI350"],
+    "cpu": ["CPU", "processor", "Xeon", "EPYC", "Grace", "Granite Rapids", "server CPU", "datacenter CPU"],
+    "hbm": ["HBM", "high bandwidth memory", "HBM3E", "HBM4", "SK hynix", "memory chip", "DRAM", "high bandwidth"],
+    "ssd": ["SSD", "solid state drive", "NAND", "flash memory", "enterprise SSD", "eSSD", "storage", "PM9", "9550"],
+    "optical": ["optical module", "silicon photonics", "800G", "1.6T", "CPO", "co-packaged optics", "transceiver", "laser chip", "InfiniBand"],
+    "network": ["network chip", "switch", "NIC", "DPU", "Ethernet", "Broadcom", "Marvell", "Tomahawk", "ConnectX", "NVLink", "PCIe"],
+    "foundry": ["TSMC", "Samsung foundry", "Intel foundry", "wafer", "fab", "lithography", "ASML", "EUV", "DUV", "CoWoS", "packaging", "advanced packaging", "chip fab", "semiconductor fab", "capacity expansion", "clean room"],
+    "capex": ["capex", "capital expenditure", "cloud spending", "hyperscaler", "datacenter spending", "infrastructure spending", "Microsoft Azure", "Google Cloud", "AWS", "Meta AI"],
+    "ml_model": ["large language model", "LLM", "foundation model", "GPT", "Claude", "Gemini", "Llama", "training cluster", "inference demand", "model deployment", "AI infrastructure"],
+    "pcb": ["PCB", "printed circuit board", "ABF substrate", "IC substrate", "packaging substrate", "Unimicron", "Ibiden"],
+    "mlcc": ["MLCC", "multilayer ceramic capacitor", "Murata", "passive component", "capacitor"],
+    "power": ["power supply", "power shelf", "HVDC", "Delta Electronics", "rack power", "datacenter power", "cooling", "liquid cooling"]
+  }
+}

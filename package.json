@@ -1,0 +1,16 @@
+{
+  "name": "semi-monitor",
+  "version": "1.0.0",
+  "description": "Semiconductor industry monitoring station",
+  "type": "module",
+  "scripts": {
+    "collect": "node src/collectors/rss.js",
+    "push": "node src/output/push-to-turso.js",
+    "dashboard": "node src/output/generate-html.js"
+  },
+  "dependencies": {
+    "@libsql/client": "^0.14.0",
+    "feedparser": "^2.2.10",
+    "request": "^2.88.2"
+  }
+}

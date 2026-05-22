@@ -1,0 +1,8 @@
+node_modules/
+.env
+*.log
+data/
+.scweet_state.db
+scweet_state.db
+__pycache__/
+.DS_Store
