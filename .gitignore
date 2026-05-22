@@ -4,5 +4,7 @@ node_modules/
 data/
 .scweet_state.db
 scweet_state.db
+scweet_state.db-shm
+scweet_state.db-wal
 __pycache__/
 .DS_Store
